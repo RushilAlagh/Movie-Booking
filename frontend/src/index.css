@@ -1,0 +1,92 @@
+/* Import all of Tailwind in one line */
+@import "tailwindcss";
+
+/* 1️⃣ Design tokens via @theme */
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --color-background: 222.2 84% 4.9%;
+  --color-foreground: 210 40% 98%;
+  --color-primary: 187 134 252;
+  --color-secondary: 3 218 198;
+  --radius-md: 0.5rem;
+}
+
+/* 2️⃣ Base styles layer */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: hsl(var(--color-background));
+    color: hsl(var(--color-foreground));
+    line-height: 1.5;
+    min-height: 100vh;
+    margin: 0;
+  }
+}
+
+/* 3️⃣ Components layer */
+@layer components {
+  .neumorphic {
+    background: hsl(var(--color-background) / 0.5);
+    box-shadow:
+      5px 5px 10px hsl(0 0% 0% / 0.1),
+      -5px -5px 10px hsl(0 0% 100% / 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid hsl(0 0% 100% / 0.05);
+    border-radius: var(--radius-md);
+    @supports not (backdrop-filter: blur(8px)) {
+      background: hsl(var(--color-background) / 0.8);
+    }
+  }
+
+  /* Seat‐grid and seat styles */
+  .seat-grid {
+    display: grid;
+    grid-template-columns: repeat(10, var(--seat-size));
+    gap: 0.25rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .seat {
+    --seat-size: 2rem;
+    width: var(--seat-size);
+    height: var(--seat-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 200ms ease-in-out;
+    background: hsl(209 93% 81%);
+    color: hsl(31 41% 55%);
+  }
+  .seat:hover:not(.booked),
+  .seat:focus-visible:not(.booked) {
+    transform: scale(1.05);
+    background: hsl(229 93% 87%);
+  }
+  .seat.selected {
+    background: hsl(142.4 70.6% 45.3%);
+    color: white;
+  }
+  .seat.booked {
+    background: hsl(0 84.2% 60.2%);
+    color: white;
+    cursor: not-allowed;
+  }
+}
+
+/* 4️⃣ Utilities layer */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scroll-m {
+    scroll-margin-block: 2rem;
+  }
+}
